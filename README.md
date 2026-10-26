@@ -5,6 +5,40 @@
 
 ---
 
+## Deploying to Vercel
+
+The project is fully configured and ready for 1-click deployment on **Vercel** with:
+- `vercel.json` configured with proper rewrites and clean URLs.
+- Serverless API endpoints in `/api/health.js` and `/api/room.js` for cross-device message synchronization.
+- 0ms cross-tab duplex synchronization via `BroadcastChannel` (two browser windows on the same device can argue with 0ms latency).
+
+### Method 1: Deploy via GitHub (Recommended)
+1. Push this project to your GitHub account:
+   ```bash
+   git remote add origin https://github.com/YOUR_USERNAME/takraar.git
+   git branch -M main
+   git push -u origin main
+   ```
+2. Go to [vercel.com](https://vercel.com) and click **"Add New Project"**.
+3. Import your `takraar` repository.
+4. Leave all build and output settings as default (Framework Preset: **Other**).
+5. Click **Deploy**. Your app will be live at `https://your-project.vercel.app` in under 30 seconds!
+
+### Method 2: Deploy directly via Vercel CLI
+```bash
+# Run in the project directory:
+npx vercel
+```
+Follow the quick CLI prompts:
+- *Set up and deploy?* **Y**
+- *Which scope?* Select your account
+- *Link to existing project?* **N**
+- *Project name?* `takraar`
+- *In which directory is your code located?* `./`
+- *Want to modify these settings?* **N**
+
+---
+
 ## Why Existing Translators Fail at Arguments
 
 Every speech translation tool in existence today (Google Translate, Apple Translate, DeepL, walkie-talkie mode) is designed for **polite transactions** ("Where is the train station?", "Check, please"):
