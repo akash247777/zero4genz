@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAKRAAR (तक्रार) | The Duplex Multilingual Argument Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-dark">
+  <!-- Subtle background noise texture -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Main App Shell -->
+  <div class="app-container">
+    
+    <!-- Top Bar / Mission Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="logo-mark">
+          <span class="logo-symbol">⚡</span>
+          <span class="logo-title">TAKRAAR</span>
+          <span class="logo-devanagari">तक्रार</span>
+        </div>
+        <span class="tagline">The Real-Time Multilingual Argument Engine</span>
+      </div>
+
+      <div class="header-center">
+        <!-- Live Heat Telemetry Bar -->
+        <div class="heat-meter-hud">
+          <div class="heat-badge">
+            <span class="heat-icon">🔥</span>
+            <span class="heat-label">HEAT:</span>
+            <span id="heat-value" class="heat-number">24°C</span>
+            <span id="heat-state-text" class="heat-state">SIMMERING</span>
+          </div>
+          <div class="heat-bar-track">
+            <div id="heat-bar-fill" class="heat-bar-fill" style="width: 24%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="stats-pills">
+          <span class="stat-pill" title="Interruptions detected in this argument">
+            <span class="stat-icon">⚡</span>
+            <span class="stat-label">CLASHES:</span>
+            <span id="interrupt-count" class="stat-val">0</span>
+          </span>
+          <span class="stat-pill" title="Points of agreement or concessions detected">
+            <span class="stat-icon">🤝</span>
+            <span class="stat-label">PIVOTS:</span>
+            <span id="concession-count" class="stat-val">0</span>
+          </span>
+        </div>
+
+        <button id="scenario-selector-btn" class="btn btn-secondary btn-sm">
+          <span>⚡ Pick Scenario</span>
+        </button>
+        <button id="toggle-audio-sfx" class="btn btn-icon btn-sm active" title="Toggle Sound FX">
+          <span id="sfx-icon">🔊</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Sub-banner: Why arguments fail on normal translators -->
+    <div class="argument-banner">
+      <div class="banner-content">
+        <span class="banner-pill">REAL DUPLEX SPEECH</span>
+        <p>Normal translators force polite walkie-talkie turns. Real arguments need <strong>interruptions, vocal heat, and mind-shift detection</strong>. Speak over each other to test.</p>
+      </div>
+      <div class="banner-actions">
+        <button id="quick-demo-btn" class="btn btn-accent btn-sm">
+          <span>▶ Watch Heated Demo</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- The Dual Arena (Split Floor) -->
+    <main class="arena-grid">
+
+      <!-- LEFT SIDE: SPEAKER ALPHA -->
+      <section class="speaker-column alpha-side" id="column-alpha">
+        <div class="speaker-card-header">
+          <div class="speaker-info">
+            <div class="speaker-avatar alpha-avatar">
+              <span id="alpha-avatar-label">K</span>
+              <span class="live-pulse-dot" id="alpha-pulse"></span>
+            </div>
+            <div>
+              <div class="speaker-name-row">
+                <h2 id="alpha-name" class="speaker-name">Kabir (CTO)</h2>
+                <span class="floor-badge" id="alpha-floor-badge">OFF FLOOR</span>
+              </div>
+              <div class="speaker-lang-selector">
+                <span class="lang-flag">🇮🇳</span>
+                <select id="alpha-lang-select" class="lang-select">
+                  <option value="hi-IN" selected>Hindi / Hinglish (हिंदी)</option>
+                  <option value="es-ES">Spanish (Español)</option>
+                  <option value="fr-FR">French (Français)</option>
+                  <option value="de-DE">German (Deutsch)</option>
+                  <option value="ja-JP">Japanese (日本語)</option>
+                  <option value="en-US">English (US)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="audio-meter-wrap">
+            <span class="meter-label">MIC LEVEL</span>
+            <div class="vu-meter">
+              <div id="alpha-vu-fill" class="vu-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Sub-second Speech Stream / Current Utterance -->
+        <div class="live-stream-box" id="alpha-stream-box">
+          <div class="stream-status-row">
+            <span class="stream-status-label" id="alpha-status-text">LISTENING...</span>
+            <span class="speech-speed-indicator" id="alpha-wpm">0 WPM</span>
+          </div>
+
+          <!-- Original Native Speech Stream -->
+          <div class="stream-text-native" id="alpha-native-stream">
+            <span class="placeholder-text">Speak or tap an aggressive point below...</span>
+          </div>
+
+          <!-- Live Translation Outgoing Stream -->
+          <div class="stream-translation-wrap">
+            <span class="stream-arrow">↳ Translated to Alex:</span>
+            <div class="stream-text-translated" id="alpha-translated-stream">
+              <span class="placeholder-text-dim">Sub-second translation appears here in real time...</span>
+            </div>
+          </div>
+
+          <!-- Cut-off / Interruption Alert Badge -->
+          <div class="interrupt-alert-badge" id="alpha-interrupted-alert">
+            <span class="clash-bolt">⚡</span> INTERRUPTED BY ALEX (CUT OFF MID-SENTENCE)
+          </div>
+        </div>
+
+        <!-- Speaker Alpha History Log -->
+        <div class="speaker-history-feed" id="alpha-history-feed">
+          <div class="history-label">ALPHA'S ARGUMENT LOG</div>
+          <div class="history-list" id="alpha-history-list">
+            <!-- Messages populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Speaker Alpha Input Controller -->
+        <div class="speaker-controls">
+          <div class="primary-input-row">
+            <button id="alpha-mic-btn" class="btn btn-mic btn-alpha-mic">
+              <span class="mic-icon">🎙️</span>
+              <span class="mic-text">Hold or Click to Speak</span>
+            </button>
+            <button id="alpha-interrupt-btn" class="btn btn-interrupt" title="Immediately cut Alex off!">
+              <span>⚡ INTERRUPT ALEX!</span>
+            </button>
+          </div>
+
+          <!-- Angry / Heated Quick Slugs for Testing -->
+          <div class="quick-slugs-container">
+            <span class="slugs-label">RAPID AMMUNITION:</span>
+            <div class="slugs-pills" id="alpha-slugs">
+              <button class="slug-pill" data-side="alpha" data-text="Yeh bilkul bakwaas hai! Main 90 ghante kaam kar raha hoon!">
+                "Yeh bilkul bakwaas hai! 90 ghante kaam..."
+              </button>
+              <button class="slug-pill" data-side="alpha" data-text="Tum sun bhi rahe ho mujhe? Code ka issue nahi tha, AWS region crash hua tha!">
+                "Tum sun bhi rahe ho? AWS crash hua tha!"
+              </button>
+              <button class="slug-pill" data-side="alpha" data-text="Ruko! Meri baat khatam nahi hui! Logs dekhe tumne?">
+                "Ruko! Meri baat khatam nahi hui!"
+              </button>
+              <button class="slug-pill" data-side="alpha" data-text="Theek hai, agar tum cloud bill dekhoge toh samajh aayega meri galti nahi thi.">
+                "Theek hai, cloud bill dekhoge toh..."
+              </button>
+            </div>
+          </div>
+
+          <!-- Manual Fury Input -->
+          <div class="text-input-row">
+            <input type="text" id="alpha-manual-input" class="argument-input" placeholder="Type in Hindi / native language and hit Enter...">
+            <button id="alpha-send-btn" class="btn btn-send">Shoot ↵</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CENTER CONFRONTATION & ARBITRATION SPINE -->
+      <aside class="center-spine">
+        
+        <!-- Floor Status & Collision Alert -->
+        <div class="floor-collision-detector" id="collision-detector">
+          <div class="collision-indicator">
+            <span id="floor-state-dot" class="state-dot dot-neutral"></span>
+            <span id="floor-state-text">FLOOR: MUTUAL STANDOFF</span>
+          </div>
+          <div id="collision-banner" class="collision-banner">
+            <span>⚡ SPEECH OVERLAP! BOTH TALKING OVER EACH OTHER</span>
+          </div>
+        </div>
+
+        <!-- Real-Time Waveform Clash Canvas -->
+        <div class="waveform-box">
+          <div class="waveform-header">
+            <span>DUPLEX ACOUSTIC CLASH</span>
+            <span id="overlap-metric">0% OVERLAP</span>
+          </div>
+          <canvas id="waveform-canvas" width="300" height="90"></canvas>
+        </div>
+
+        <!-- Live Contention Core: What are they actually fighting over? -->
+        <div class="dispute-topic-card">
+          <div class="topic-header">
+            <span class="topic-tag">CURRENT CONTENTION</span>
+            <span class="dispute-timer" id="dispute-timer">00:00</span>
+          </div>
+          <h3 id="dispute-title" class="dispute-title">Startup Equity Dilution & Weekend Outage</h3>
+          <p id="dispute-summary" class="dispute-desc">Kabir claims Alex unilaterally slashed 15% vested equity after a Sunday crash. Alex claims Kabir shipped unreviewed migrations that wiped the DB.</p>
+        </div>
+
+        <!-- Mind-Shift & Common Ground Tracker ("Changing their minds") -->
+        <div class="concession-card">
+          <div class="concession-header">
+            <div class="concession-title-row">
+              <span class="concession-icon">💡</span>
+              <span class="concession-heading">MIND-SHIFT & CONCESSIONS</span>
+            </div>
+            <span id="pivot-indicator-badge" class="pivot-badge">0 CONCESSIONS</span>
+          </div>
+
+          <div class="concession-body" id="concession-log">
+            <div class="concession-empty" id="concession-empty-state">
+              Neither side has backed down yet. Watch for the crack when factual evidence or emotional concession is made.
+            </div>
+            <ul class="concession-list" id="concession-list">
+              <!-- Populated when concessions happen -->
+            </ul>
+          </div>
+
+          <!-- Dynamic Common Ground Synthesizer -->
+          <div class="common-ground-box" id="common-ground-box">
+            <div class="cg-label">EMERGING COMMON GROUND:</div>
+            <div class="cg-text" id="common-ground-text">Positions are still opposed. No consensus reached.</div>
+          </div>
+        </div>
+
+        <!-- Argument Intensity Spectrum -->
+        <div class="spectrum-card">
+          <div class="spectrum-header">
+            <span>ARGUMENT TRAJECTORY</span>
+            <span id="trajectory-badge">ESCALATING</span>
+          </div>
+          <div class="spectrum-steps">
+            <div class="spectrum-step active" id="step-entrenched">1. Entrenched</div>
+            <div class="spectrum-step" id="step-clash">2. Crossfire</div>
+            <div class="spectrum-step" id="step-crack">3. Crack</div>
+            <div class="spectrum-step" id="step-pivot">4. Resolution</div>
+          </div>
+        </div>
+
+        <!-- Audio Output Settings -->
+        <div class="spine-footer">
+          <label class="toggle-control">
+            <input type="checkbox" id="tts-toggle" checked>
+            <span class="toggle-switch"></span>
+            <span class="toggle-label">Voice Synthesis (Emotionally Pitch-Shifted)</span>
+          </label>
+        </div>
+      </aside>
+
+      <!-- RIGHT SIDE: SPEAKER BETA -->
+      <section class="speaker-column beta-side" id="column-beta">
+        <div class="speaker-card-header">
+          <div class="speaker-info">
+            <div class="speaker-avatar beta-avatar">
+              <span id="beta-avatar-label">A</span>
+              <span class="live-pulse-dot" id="beta-pulse"></span>
+            </div>
+            <div>
+              <div class="speaker-name-row">
+                <h2 id="beta-name" class="speaker-name">Alex (CEO)</h2>
+                <span class="floor-badge" id="beta-floor-badge">OFF FLOOR</span>
+              </div>
+              <div class="speaker-lang-selector">
+                <span class="lang-flag">🇺🇸</span>
+                <select id="beta-lang-select" class="lang-select">
+                  <option value="en-US" selected>English (US)</option>
+                  <option value="hi-IN">Hindi (हिंदी)</option>
+                  <option value="es-ES">Spanish (Español)</option>
+                  <option value="de-DE">German (Deutsch)</option>
+                  <option value="fr-FR">French (Français)</option>
+                  <option value="ja-JP">Japanese (日本語)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="audio-meter-wrap">
+            <span class="meter-label">MIC LEVEL</span>
+            <div class="vu-meter">
+              <div id="beta-vu-fill" class="vu-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Sub-second Speech Stream / Current Utterance -->
+        <div class="live-stream-box" id="beta-stream-box">
+          <div class="stream-status-row">
+            <span class="stream-status-label" id="beta-status-text">LISTENING...</span>
+            <span class="speech-speed-indicator" id="beta-wpm">0 WPM</span>
+          </div>
+
+          <!-- Original Native Speech Stream -->
+          <div class="stream-text-native" id="beta-native-stream">
+            <span class="placeholder-text">Speak or tap a counter-attack below...</span>
+          </div>
+
+          <!-- Live Translation Outgoing Stream -->
+          <div class="stream-translation-wrap">
+            <span class="stream-arrow">↳ Translated to Kabir:</span>
+            <div class="stream-text-translated" id="beta-translated-stream">
+              <span class="placeholder-text-dim">Sub-second translation appears here in real time...</span>
+            </div>
+          </div>
+
+          <!-- Cut-off / Interruption Alert Badge -->
+          <div class="interrupt-alert-badge" id="beta-interrupted-alert">
+            <span class="clash-bolt">⚡</span> INTERRUPTED BY KABIR (CUT OFF MID-SENTENCE)
+          </div>
+        </div>
+
+        <!-- Speaker Beta History Log -->
+        <div class="speaker-history-feed" id="beta-history-feed">
+          <div class="history-label">BETA'S ARGUMENT LOG</div>
+          <div class="history-list" id="beta-history-list">
+            <!-- Messages populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Speaker Beta Input Controller -->
+        <div class="speaker-controls">
+          <div class="primary-input-row">
+            <button id="beta-mic-btn" class="btn btn-mic btn-beta-mic">
+              <span class="mic-icon">🎙️</span>
+              <span class="mic-text">Hold or Click to Speak</span>
+            </button>
+            <button id="beta-interrupt-btn" class="btn btn-interrupt" title="Immediately cut Kabir off!">
+              <span>⚡ INTERRUPT KABIR!</span>
+            </button>
+          </div>
+
+          <!-- Angry / Heated Quick Slugs for Testing -->
+          <div class="quick-slugs-container">
+            <span class="slugs-label">RAPID COUNTER-ATTACKS:</span>
+            <div class="slugs-pills" id="beta-slugs">
+              <button class="slug-pill" data-side="beta" data-text="Don't give me that! You pushed untested code straight to main on Sunday!">
+                "Don't give me that! You pushed to main on Sunday!"
+              </button>
+              <button class="slug-pill" data-side="beta" data-text="Hold on! We lost our biggest enterprise client while you were unreachable!">
+                "Hold on! We lost our biggest client!"
+              </button>
+              <button class="slug-pill" data-side="beta" data-text="Wait... what AWS crash? Nobody reported an AWS region outage.">
+                "Wait... what AWS crash? Nobody reported that."
+              </button>
+              <button class="slug-pill" data-side="beta" data-text="Wait, look at this timestamp... the downtime started before your push. That was us-east-1.">
+                "Wait, look at the timestamp... that was us-east-1."
+              </button>
+            </div>
+          </div>
+
+          <!-- Manual Fury Input -->
+          <div class="text-input-row">
+            <input type="text" id="beta-manual-input" class="argument-input" placeholder="Type in English / native language and hit Enter...">
+            <button id="beta-send-btn" class="btn btn-send">Shoot ↵</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Scenario Modal / Selector -->
+    <div id="scenario-modal" class="modal-backdrop hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>CHOOSE AN ARGUMENT SCENARIO</h3>
+          <button id="close-modal-btn" class="btn-close">&times;</button>
+        </div>
+        <p class="modal-subtitle">Each scenario has pre-configured emotional heat, colloquial phrases, and an authentic mind-shift arc.</p>
+        
+        <div class="scenario-grid">
+          <!-- Scenario 1 -->
+          <div class="scenario-item active" data-scenario="startup">
+            <div class="scenario-tag">STARTUP DYNAMICS</div>
+            <h4>The Equity Slashing & Midnight Server Crash</h4>
+            <div class="scenario-langs">
+              <span>🇮🇳 Kabir (Hindi / Hinglish)</span>
+              <span>vs</span>
+              <span>🇺🇸 Alex (English)</span>
+            </div>
+            <p>CTO worked 90-hour weeks. CEO slashed his vesting over a production crash. High tension, savage interruptions, resolving when AWS status logs prove infrastructure failure.</p>
+            <button class="btn btn-sm btn-select-scenario" data-scenario="startup">Load Scenario</button>
+          </div>
+
+          <!-- Scenario 2 -->
+          <div class="scenario-item" data-scenario="wedding">
+            <div class="scenario-tag">FAMILY HOSPITALITY CRISIS</div>
+            <h4>The Udaipur Muhurat & 300 Unannounced Guests</h4>
+            <div class="scenario-langs">
+              <span>🇮🇳 Mrs. Sharma (Hindi)</span>
+              <span>vs</span>
+              <span>🇬🇧 Marcus (English Planner)</span>
+            </div>
+            <p>Mother of the Bride vs British Wedding Director. Sharmaji's extended relatives arrived 3 hours early hungry, dhol crew is missing, and contract limits dining times. Clashing over Indian hospitality vs rigid logistics.</p>
+            <button class="btn btn-sm btn-select-scenario" data-scenario="wedding">Load Scenario</button>
+          </div>
+
+          <!-- Scenario 3 -->
+          <div class="scenario-item" data-scenario="freelance">
+            <div class="scenario-tag">CLIENT CONTRACT WAR</div>
+            <h4>The 18 Unbilled Revisions & Missed Demo</h4>
+            <div class="scenario-langs">
+              <span>🇪🇸 Mateo (Spanish)</span>
+              <span>vs</span>
+              <span>🇺🇸 Rachel (English VP)</span>
+            </div>
+            <p>Agency lead designer refused to do revision #19 over the weekend. Client threatened non-payment. Heated crossfire over scope creep and ghosted Figma comments, pivoting to a paid phase-2 addendum.</p>
+            <button class="btn btn-sm btn-select-scenario" data-scenario="freelance">Load Scenario</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Simulation Player Bar (when running automated demo) -->
+    <div id="simulation-bar" class="simulation-bar hidden">
+      <div class="sim-info">
+        <span class="sim-pulse">● LIVE PLAYTHROUGH</span>
+        <span id="sim-step-desc">Kabir launches opening accusation...</span>
+      </div>
+      <div class="sim-controls">
+        <button id="sim-pause-btn" class="btn btn-sm btn-secondary">Pause</button>
+        <button id="sim-stop-btn" class="btn btn-sm btn-danger">Stop</button>
+      </div>
+    </div>
+
+    <!-- Bottom Status Strip -->
+    <footer class="app-status-bar">
+      <div class="status-left">
+        <span class="status-indicator online"></span>
+        <span>TAKRAAR Duplex Engine Active</span>
+        <span class="sep">|</span>
+        <span id="subagent-status">Full-Duplex Interruption Guard: ON</span>
+        <span class="sep">|</span>
+        <span>Sub-second Latency: ~180ms</span>
+      </div>
+      <div class="status-right">
+        <span>Designed for visceral confrontation & mind changes</span>
+        <span class="sep">|</span>
+        <a href="https://zero4genz.in" target="_blank" rel="noopener">zero4genz.in</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

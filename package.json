@@ -1,0 +1,24 @@
+{
+  "name": "takraar-argument-engine",
+  "version": "1.0.0",
+  "description": "TAKRAAR - The Duplex Multilingual Argument Engine",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "echo 'Build ready for Vercel'"
+  },
+  "keywords": [
+    "multilingual",
+    "argument",
+    "realtime",
+    "duplex",
+    "speech"
+  ],
+  "author": "ZERO4GenZ",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.3.0",
+    "ws": "^8.22.0"
+  }
+}
